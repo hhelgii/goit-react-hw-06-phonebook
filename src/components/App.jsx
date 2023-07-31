@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { AddContact } from './addContactForm/AddContact';
@@ -49,89 +49,48 @@ export const App = () => {
       // setContacts(storageContacts)
       dispatch(setContacts(storageContacts));
     }
-  }, []);
+  }, [dispatch]);
   // componentDidMount+componentDidUpdate
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts));
-  }, [contacts]);
+  }, [contacts,dispatch]);
 
   const filtered = onFilterContact();
   return (
     <div
       className={`${css.container} ${css.containerStar} ${css.containerBird}`}
     >
-      <div className={`${css.star1}`}></div>
-      <div className={`${css.star1}`}></div>
-      <div className={`${css.star1}`}></div>
-      <div className={`${css.star1}`}></div>
-      <div className={`${css.star1}`}></div>
+      
 
-      <div className={`${css.star2}`}></div>
-      <div className={`${css.star2}`}></div>
-      <div className={`${css.star2}`}></div>
-      <div className={`${css.star2}`}></div>
-      <div className={`${css.star2}`}></div>
-
-      <h1>PhoneBook:</h1>
-      <AddContact onHandleSubmit={onSubmit}></AddContact>
-      <h2>Contacts</h2>
-      <FilterContact
-        value={filter}
-        onFilterChange={onInputChange}
-      ></FilterContact>
-      <ContactList contacts={filtered} onDelete={onDelete}></ContactList>
-
-      <div className={`${css.bird} ${css.birdAnim}`}>
-        <div className={`${css.birdContainer}`}>
-          <div className={`${css.wing} ${css.wingLeft}`}>
-            <div className={`${css.wingLeftTop}`}></div>
-          </div>
-          <div className={`${css.wing} ${css.wingRight}`}>
-            <div className={`${css.wingRightTop}`}></div>
-          </div>
-        </div>
+      <div className={`${css.phoneContainer}`}>
+        <h2>PhoneBook:</h2>
+        <AddContact onHandleSubmit={onSubmit}></AddContact>
       </div>
 
-      <div className={`${css.bird} ${css.birdAnim}`}>
-        <div className={`${css.birdContainer}`}>
-          <div className={`${css.wing} ${css.wingLeft}`}>
-            <div className={`${css.wingLeftTop}`}></div>
-          </div>
-          <div className={`${css.wing} ${css.wingRight}`}>
-            <div className={`${css.wingRightTop}`}></div>
-          </div>
-        </div>
+      <div className={`${css.contactsContainer}`}>
+        <h2>Contacts</h2>
+        <FilterContact
+          value={filter}
+          onFilterChange={onInputChange}
+        ></FilterContact>
+        <ContactList contacts={filtered} onDelete={onDelete}></ContactList>
       </div>
-      <div className={`${css.bird} ${css.birdAnim}`}>
-        <div className={`${css.birdContainer}`}>
-          <div className={`${css.wing} ${css.wingLeft}`}>
-            <div className={`${css.wingLeftTop}`}></div>
-          </div>
-          <div className={`${css.wing} ${css.wingRight}`}>
-            <div className={`${css.wingRightTop}`}></div>
-          </div>
-        </div>
-      </div>
-      <div className={`${css.bird} ${css.birdAnim}`}>
-        <div className={`${css.birdContainer}`}>
-          <div className={`${css.wing} ${css.wingLeft}`}>
-            <div className={`${css.wingLeftTop}`}></div>
-          </div>
-          <div className={`${css.wing} ${css.wingRight}`}>
-            <div className={`${css.wingRightTop}`}></div>
-          </div>
-        </div>
-      </div>
-      <div className={`${css.bird} ${css.birdAnim}`}>
-        <div className={`${css.birdContainer}`}>
-          <div className={`${css.wing} ${css.wingLeft}`}>
-            <div className={`${css.wingLeftTop}`}></div>
-          </div>
-          <div className={`${css.wing} ${css.wingRight}`}>
-            <div className={`${css.wingRightTop}`}></div>
-          </div>
-        </div>
-      </div>
+
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
+      <div className={`${css.star1}`}></div>
     </div>
   );
 };

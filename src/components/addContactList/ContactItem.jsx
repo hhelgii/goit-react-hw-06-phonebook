@@ -15,7 +15,7 @@ export const ContactItem = ({ contact, onDeleteContact }) => {
         }}
         className={css.deleteBtn}
       >
-        x
+        
       </button>
     </li>
   );

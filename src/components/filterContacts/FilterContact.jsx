@@ -1,10 +1,11 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import css from './filteredContacts.module.css'
 export const FilterContact = ({ value, onFilterChange }) => {
   return (
     <>
       <label htmlFor="filter">Find contacts by name</label>
-      <input
+      <input className={css.filterInput}
         type="text"
         name="filter"
         value={value}
