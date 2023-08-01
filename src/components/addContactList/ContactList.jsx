@@ -1,29 +1,73 @@
+// import React from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { setContacts } from 'redux/contactsReducer';
+
+// import { ContactItem } from './ContactItem';
+// import css from './contactList.module.css'
+// export const ContactList = () => {
+//   const dispatch=useDispatch();
+//   const contacts=useSelector(state=>state.contacts.contacts)
+//   const filter=useSelector(state=>state.contacts.filter)
+//   const onDelete = (id) => {
+//     dispatch(setContacts(contacts.filter((contact) => contact.id !== id)));
+//   };
+//   const onFilterContact = () => {
+//     return contacts.filter(({ name }) =>
+//       name.toLowerCase().includes(filter.toLowerCase())
+//     );
+//   };
+//   const filtered = onFilterContact();
+//   return (
+//     <ul className={css.contactsList}>
+//       {filtered.map(contact => {
+//         return (
+//           <ContactItem
+//             contact={contact}
+//             key={contact.id}
+//             onDeleteContact={onDelete}
+//           />
+//         );
+//       })}
+//     </ul>
+//   );
+// };
+
 import React from 'react';
-import propTypes from 'prop-types';
-import { ContactItem } from './ContactItem';
-import css from './contactList.module.css'
-export const ContactList = ({ contacts, onDelete }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { setContacts } from 'redux/contactsReducer';
+import css from './contactList.module.css';
+
+export const ContactList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.contacts);
+  const filter = useSelector(state => state.contacts.filter);
+
+  const onDelete = id => {
+    dispatch(setContacts(contacts.filter(contact => contact.id !== id)));
+  };
+
+  const onFilterContact = () => {
+    return contacts.filter(({ name }) =>
+      name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
+  const filtered = onFilterContact();
+
   return (
     <ul className={css.contactsList}>
-      {contacts.map(contact => {
-        return (
-          <ContactItem
-            contact={contact}
-            key={contact.id}
-            onDeleteContact={onDelete}
-          />
-        );
-      })}
+      {filtered.map(contact => (
+        <li key={contact.id} className={css.listItem}>
+          <span>
+            {contact.name}: {contact.number}
+          </span>
+          <button
+            type="button"
+            onClick={() => onDelete(contact.id)}
+            className={css.deleteBtn}
+          ></button>
+        </li>
+      ))}
     </ul>
   );
-};
-ContactList.propTypes = {
-  contacts: propTypes.arrayOf(
-    propTypes.exact({
-      id: propTypes.string.isRequired,
-      name: propTypes.string.isRequired,
-      number: propTypes.string.isRequired,
-    })
-  ).isRequired,
-  onDelete: propTypes.func.isRequired,
 };

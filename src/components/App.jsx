@@ -4,64 +4,36 @@ import { nanoid } from 'nanoid';
 import { AddContact } from './addContactForm/AddContact';
 import { ContactList } from './addContactList/ContactList';
 import { FilterContact } from './filterContacts/FilterContact';
-import { setContacts, setFilter } from 'redux/contactsReducer';
+import { setContacts } from 'redux/contactsReducer';
 import css from './app.module.css';
 const STORAGE_KEY = 'contacts';
 
 export const App = () => {
-  // const [contacts, setContacts] = useState([
-  //   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  //   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  //   { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  //   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  // ]);
-  // const [filter, setFilter] = useState('');
-
   const contacts = useSelector(state => state.contacts.contacts);
-  // console.log(contacts)
-  const filter = useSelector(state => state.contacts.filter);
   const dispatch = useDispatch();
-  const onInputChange = event => {
-    const { value } = event.target;
-    // setFilter(value);
-    dispatch(setFilter(value));
-  };
+
   const onSubmit = event => {
     event.preventDefault();
     const name = event.target.name.value.trim();
     const number = event.target.number.value.trim();
-    // setContacts([...contacts, { name, number, id: nanoid() }]);
     dispatch(setContacts([...contacts, { name, number, id: nanoid() }]));
   };
-  const onFilterContact = () => {
-    return contacts.filter(({ name }) =>
-      name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
-  const onDelete = id => {
-    // setContacts(contacts.filter(contact => contact.id !== id));
-    dispatch(setContacts(contacts.filter(contact => contact.id !== id)));
-  };
-  // componentDidMount
+
   useEffect(() => {
     const storageContacts = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (storageContacts) {
-      // setContacts(storageContacts)
       dispatch(setContacts(storageContacts));
     }
   }, [dispatch]);
-  // componentDidMount+componentDidUpdate
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts));
-  }, [contacts,dispatch]);
+  }, [contacts, dispatch]);
 
-  const filtered = onFilterContact();
   return (
     <div
       className={`${css.container} ${css.containerStar} ${css.containerBird}`}
     >
-      
-
       <div className={`${css.phoneContainer}`}>
         <h2>PhoneBook:</h2>
         <AddContact onHandleSubmit={onSubmit}></AddContact>
@@ -69,11 +41,8 @@ export const App = () => {
 
       <div className={`${css.contactsContainer}`}>
         <h2>Contacts</h2>
-        <FilterContact
-          value={filter}
-          onFilterChange={onInputChange}
-        ></FilterContact>
-        <ContactList contacts={filtered} onDelete={onDelete}></ContactList>
+        <FilterContact></FilterContact>
+        <ContactList></ContactList>
       </div>
 
       <div className={`${css.star1}`}></div>
